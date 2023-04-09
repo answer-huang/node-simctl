@@ -1,12 +1,24 @@
 {
-  "name": "node-simctl",
+  "name": "@nio-wad/node-simctl",
   "description": "Wrapper around Apple's simctl binary",
+  "version": "7.1.13",
+  "scripts": {
+    "build": "rm -rf build && babel --out-dir=build/lib lib && babel --out-dir=build index.js && npx tsc",
+    "build:publish": "npm run build && npm publish --tag=beta",
+    "dev": "npm run build -- --watch",
+    "lint": "eslint .",
+    "lint:fix": "npm run lint -- --fix",
+    "precommit-lint": "lint-staged",
+    "precommit-msg": "echo 'Pre-commit checks...' && exit 0",
+    "prepare": "npm run build",
+    "test": "mocha --exit --timeout 1m \"./test/unit/**/*-specs.js\"",
+    "e2e-test": "mocha --exit --timeout 5m \"./test/e2e/**/*-specs.js\""
+  },
   "tags": [
     "apple",
     "ios",
     "simctl"
   ],
-  "version": "7.1.12",
   "author": "Appium Contributors",
   "license": "Apache-2.0",
   "repository": {
@@ -22,9 +34,6 @@
   },
   "main": "./build/index.js",
   "bin": {},
-  "directories": {
-    "lib": "./lib"
-  },
   "files": [
     "build/"
   ],
@@ -39,17 +48,6 @@
     "teen_process": "^2.0.0",
     "uuid": "^9.0.0",
     "which": "^2.0.0"
-  },
-  "scripts": {
-    "build": "rm -rf build && babel --out-dir=build/lib lib && babel --out-dir=build index.js && npx tsc",
-    "dev": "npm run build -- --watch",
-    "lint": "eslint .",
-    "lint:fix": "npm run lint -- --fix",
-    "precommit-lint": "lint-staged",
-    "precommit-msg": "echo 'Pre-commit checks...' && exit 0",
-    "prepare": "npm run build",
-    "test": "mocha --exit --timeout 1m \"./test/unit/**/*-specs.js\"",
-    "e2e-test": "mocha --exit --timeout 5m \"./test/e2e/**/*-specs.js\""
   },
   "pre-commit": [
     "precommit-msg",
